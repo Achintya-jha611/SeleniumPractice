@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 public class Dropdowns {
 
         WebDriver driver=new ChromeDriver();
@@ -44,5 +46,18 @@ public class Dropdowns {
             Thread.sleep(2000);
             //driver.findElement(By.xpath("(//a[@value='MAA'])[2]")).click();//there were 2 occurrences of  xPaths ,since selenium does top left to right scan,hence pass index accordingly
             driver.findElement(By.xpath("//div[@id='ctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']")).click();//using parent child relationship to traverse to the option instead of index...selenium only searches inside the specified parent in this case
+    }
+    @Test(testName = "Auto suggesitve dropdowns")public void autoSuggestiveDropdowns() throws InterruptedException {
+            driver.findElement(By.id("autosuggest")).sendKeys("India");
+            Thread.sleep(3000);
+            List<WebElement> list=driver.findElements(By.xpath("//li[@class=\"ui-menu-item\"][a]"));
+            for(int i=0;i<list.size();i++){
+                WebElement option=list.get(i);
+                if(option.getText().equalsIgnoreCase("India")){
+                    option.click();
+                    break;
+                }
+            }
+
     }
 }
